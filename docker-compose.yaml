@@ -1,0 +1,63 @@
+version: "3.3"
+services:
+
+  db:
+    image: postgres:16
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    env_file:
+      .env
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - ${PGADMIN_PORT}:80
+    env_file:
+      .env
+
+  alembic:
+    container_name: "alembic"
+    image: betboom_parse
+    build: ./
+    environment:
+      - ALEMBIC_INI=alembic.ini
+    depends_on:
+      - db
+    command: alembic upgrade head
+
+
+
+  redis:
+    image: redis:7
+    container_name: "redis"
+    env_file:
+      .env
+
+  betboom_parse:
+    container_name: "betboom_parse"
+    image: betboom_parse
+    build: ./
+    env_file:
+      .env
+    command: celery -A src.betboom_parse.celery_tasks worker --loglevel=${LOG_LEVEL} --purge
+
+  celery_beat:
+    container_name: "celery_beat"
+    image: betboom_parse
+    command: celery -A src.betboom_parse.celery_tasks beat --loglevel=${LOG_LEVEL}
+    build: ./
+    env_file:
+      .env
+
+
+
+
+  tg_parse:
+    container_name: "tg_parse"
+    image: "tg_parse"
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    command: python3 src/tg_parse/bot.py
+    volumes:
+      - ./src/tg_parse/sessions:/src/tg_parse/sessions:rw
