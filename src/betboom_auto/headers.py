@@ -1,5 +1,5 @@
 api_key = 'b94ac61d-b060-4892-8242-923bf2303a38' # <- apiKey <- важная вещь, передается в hedaers  -> x-api-key
-auth = '7d940184-0c2d-47c9-a423-165f91042421' # <- authorization <- нужная вещь, передается в headers -> authorization
+auth = '7d940184-0c2d-47c9-a423-165f91042421' # <- authorization <- нужная вещь, передается в headers -> authorization, меняется(неизвестно как и когда)
 
 
 headers = {

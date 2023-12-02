@@ -4,6 +4,7 @@ import logging
 
 from src.config import config
 
+# TODO: попрежнему проблема с определением суммы, буква Р определяется то как 2, то как Р, нужно разбираться
 
 logging.basicConfig(level=logging.INFO)
 
@@ -64,5 +65,3 @@ def text_from_image(message_id: int):
             new_bet, 
             ratio
         )
-
-# print(text_from_image('1'))

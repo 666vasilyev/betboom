@@ -9,6 +9,10 @@ from src.betboom_auto.headers import headers
 # а второй запрос уже отправляет task_id и тем самым происходит списание денег со счета
 logging.basicConfig(level=logging.INFO)
 
+
+### Внимательно следить за параметрами, которые передаются в make_bet()
+# TODO: удостовериться, что winner возвращаемый из функции crud совпадает с нужным нам
+
 def make_bet(match_id: int, winner: int, odd: float) -> None:
     ### winner это номер команды(1 или 2) 
     ### match_id это id матча в запросе BetBoom
