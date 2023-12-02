@@ -19,8 +19,7 @@ headers = {
     'sec-fetch-site': 'same-site',
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
     'x-api-key': api_key,
-    'x-display-resolution': '767x826',
-    'x-highlight-request': '5qGykIx5V5hvkCDLJtxBNsf3P4OK/tsZZDSjsAr',
+    'x-display-resolution': '590x826',
     'x-locale': 'RU',
     'x-sbi': '690823c0-742f-4c4d-8e1e-2706fd98378e',
 }

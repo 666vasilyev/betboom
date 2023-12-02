@@ -39,7 +39,7 @@ async def handle_new_message(event):
                     logging.info("make prediction in db")
 
                     # получим match_id для ставки
-                    match_id, winner = get_match_id_and_winner_count(
+                    match_id, winner, odd = get_match_id_and_winner_count(
                         session=session,
                         first_team=results[0],
                         second_team=results[1],
@@ -49,7 +49,8 @@ async def handle_new_message(event):
                     # ставим ставку
                     make_bet(
                         match_id=match_id, 
-                        winner=winner
+                        winner=winner,
+                        odd=odd,
                         )
                     logging.info(f"make bet in betboom")
                     

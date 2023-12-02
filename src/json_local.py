@@ -22,7 +22,7 @@ def get_json_for_all_matches(sport_id: int):
 }
 
 # TODO: убрать odds и extensions и проверить работает или нет
-def get_application_json(match_id: int, winner: int) -> dict:
+def get_application_json(match_id: int, winner: int, odd: float) -> dict:
     return {
     'operationName': 'ticketRestrictions',
     'variables': {
@@ -32,8 +32,8 @@ def get_application_json(match_id: int, winner: int) -> dict:
                     'stake': 10,
                     'selections': [
                         {
-                            'outcomeId': hash_decoder(f'outcome/od:match:{match_id}]/1|variant=way:two/1-variant=way:two|way=two/{winner}'),
-                            'odds': 1.38,
+                            'outcomeId': hash_decoder(f'outcome/od:match:{match_id}/1|variant=way:two/1-variant=way:two|way=two/{winner}'),
+                            'odds': odd,
                             'marketInfo': None,
                         },
                     ],
@@ -54,7 +54,7 @@ def get_application_json(match_id: int, winner: int) -> dict:
         },
     },
 }
-def get_confirmation_json(match_id: int, winner: int) -> dict:
+def get_confirmation_json(match_id: int, winner: int, odd: float) -> dict:
     return {
     'operationName': 'acceptTicket',
     'variables': {
@@ -64,8 +64,8 @@ def get_confirmation_json(match_id: int, winner: int) -> dict:
                     'stake': 10,
                     'selections': [
                         {
-                            'outcomeId': hash_decoder(f'outcome/od:match:{match_id}]/1|variant=way:two/1-variant=way:two|way=two/{winner}'),
-                            'odds': 1.38,
+                            'outcomeId': hash_decoder(f'outcome/od:match:{match_id}/1|variant=way:two/1-variant=way:two|way=two/{winner}'),
+                            'odds': odd,
                             'marketInfo': None,
                         },
                     ],
