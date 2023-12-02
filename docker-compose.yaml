@@ -60,4 +60,4 @@ services:
       dockerfile: Dockerfile
     command: python3 src/tg_parse/bot.py
     volumes:
-      - ./src/tg_parse/sessions:/src/tg_parse/sessions:rw
+    - ./src/tg_parse/sessions:/src/tg_parse/sessions:rw

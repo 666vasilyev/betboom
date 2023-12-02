@@ -32,6 +32,11 @@ class TelegramClientFactory:
         except Exception as e:
             logging.info(f"Ошибка при подключении к каналу: {str(e)}")
             raise TelegramClientFactoryException from e
+        
+        logging.info(f"Подключение к каналу успешно установлено")
         for event, handler in self.handlers:
+            logging.info(f"Добавление обработчика {event}")
             client.on(event)(handler)
+
+        logging.info(f"Обработчики добавлены")
         return client

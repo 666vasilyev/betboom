@@ -40,9 +40,10 @@ class Config():
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/1"
     
     
-    API_ID: int = 1506593
-    API_HASH: str = "74b07d38a04337651c59ca46bb3e9ec6"
-    PHONE_NUMBER: str = "sessions\\6289676645345"
+    API_ID: int = 24345605
+    API_HASH: str = "955f309500331d79b9f936b4d410a50e"
+    PHONE_NUMBER: str = "src/tg_parse/sessions/6289676645345"
+    
     # CHANNEL_USERNAME: str = "travobet"
     CHANNEL_USERNAME: str = "test_channel_for_botsapi3"
     MEDIA_DIR: str = "media"

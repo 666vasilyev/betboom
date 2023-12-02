@@ -50,10 +50,15 @@ async def main():
 
     factory = TelegramClientFactory()
     factory.register_handler(NewMessage(chats=config.CHANNEL_USERNAME), handle_new_message)
-    client = factory.create_client(config.PHONE_NUMBER, config.API_ID, config.API_HASH)
-    await client.start()
-    await join_channel(client)  
-    await client.run_until_disconnected()
+    # client = factory.create_client(config.PHONE_NUMBER, config.API_ID, config.API_HASH)
+    # await client.start()
+    async with factory.create_client(config.PHONE_NUMBER, config.API_ID, config.API_HASH) as client:
+
+        logging.info(f"client started")
+        await join_channel(client)  
+        logging.info(f"joined channel")
+        await client.run_until_disconnected()
+        logging.info(f"disconnected")
 
 
 if __name__ == '__main__':
