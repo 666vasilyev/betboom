@@ -6,8 +6,8 @@ import logging
 from src.config import config 
 
 from src.betboom_parse.esports import Esport
-from src.betboom_parse.utils import hash_coder
-from src.betboom_parse.json_local import get_json_for_all_matches
+from src.utils import hash_coder
+from src.json_local import get_json_for_all_matches
 
 from src.db.crud import add_new_odds
 from src.db.models import Odd

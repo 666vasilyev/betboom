@@ -8,9 +8,10 @@ from telethon.events import NewMessage
 
 from config import config
 from src.tg_parse.recognize import text_from_image
-from src.db.crud import add_new_prediction
+from src.db.crud import add_new_prediction, get_match_id_and_winner_count
 from src.db.connection import Connection
 from src.tg_parse.telegramclient_factory import TelegramClientFactory
+from src.betboom_auto.worker import make_bet
 
 logging.basicConfig(level=logging.INFO)
 
@@ -34,7 +35,24 @@ async def handle_new_message(event):
                         winner=results[2],
                         bet=results[3],
                         ratio=results[4])
+                    
+                    logging.info("make prediction in db")
 
+                    # получим match_id для ставки
+                    match_id, winner = get_match_id_and_winner_count(
+                        session=session,
+                        first_team=results[0],
+                        second_team=results[1],
+                        winner_team=results[2]
+                    )
+
+                    # ставим ставку
+                    make_bet(
+                        match_id=match_id, 
+                        winner=winner
+                        )
+                    logging.info(f"make bet in betboom")
+                    
         os.remove(image)
 
 

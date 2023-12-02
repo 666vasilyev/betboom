@@ -56,3 +56,25 @@ def add_new_prediction(
     
     session.add(new_prediction)
     session.commit()
+
+
+def get_match_id_and_winner_count(session: Session, first_team: str, second_team: str, winner_team: str) -> (int, int):
+    # Получаем match_id
+    match_id_result = (
+        session.query(Odd.match_id)
+        .filter(Odd.first_team == first_team, Odd.second_team == second_team)
+        .order_by(Odd.id.desc())
+        .first()
+    )
+    match_id = match_id_result[0] if match_id_result else None
+    
+    # Получаем номер победившей команды
+    winner = 0
+    if winner_team == first_team:
+        winner = 1
+    else:
+        if winner_team == second_team:
+            winner = 2
+        
+    return match_id, winner
+
