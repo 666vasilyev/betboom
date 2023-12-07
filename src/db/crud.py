@@ -63,7 +63,7 @@ def get_match_id_and_winner_count(session: Session, first_team: str, second_team
     odd = 0
     match = (
         session.query(Odd)
-        .filter(Odd.first_team == first_team, Odd.second_team == second_team)
+        .filter(Odd.first_team == first_team.strip(), Odd.second_team == second_team.strip())
         .order_by(Odd.id.desc())
         .first()
     )
@@ -72,11 +72,11 @@ def get_match_id_and_winner_count(session: Session, first_team: str, second_team
     
     # Получаем номер победившей команды
     winner = 0
-    if winner_team == first_team:
+    if winner_team.strip() == first_team:
         winner = 1
         odd = match.first_odd
     else:
-        if winner_team == second_team:
+        if winner_team.strip() == second_team:
             winner = 2
             odd = match.second_odd
     
