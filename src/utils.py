@@ -49,3 +49,19 @@ def compare_strings(str1, str2, threshold=3):
     distance = levenshtein_distance(str1, str2)
     return distance <= threshold
 
+def find_substring(main_string, substring, threshold=3):
+    len_main = len(main_string)
+    len_sub = len(substring)
+
+    if len_sub > len_main:
+        return False
+
+    for i in range(len_main - len_sub + 1):
+        window = main_string[i:i + len_sub]
+        distance = levenshtein_distance(window, substring)
+        if distance <= threshold:
+            return True
+
+    return False
+
+print(find_substring('BetBoom Team', 'BetBoomTeam'))

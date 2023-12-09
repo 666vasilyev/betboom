@@ -30,3 +30,4 @@ celerybeat-schedule.db
 *.session-journal
 *.jpg
 .env
+postgres_data

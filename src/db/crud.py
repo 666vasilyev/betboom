@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 import logging
+from src.utils import find_substring
 
 from src.db.models import Odd, Prediction
 
@@ -58,15 +59,24 @@ def add_new_prediction(
     session.commit()
 
 
-def get_match_id_and_winner_count(session: Session, first_team: str, second_team: str, winner_team: str) -> (int, int):
+def get_match_id_and_winner_count(session: Session, first_team: str, second_team: str, winner_team: str) -> (int, int, int):
     # Получаем match_id
     odd = 0
+
+
+    # TODO: надо сделать так, чтобы сравнение было с strip
     match = (
         session.query(Odd)
-        .filter(Odd.first_team.strip() == first_team, Odd.second_team.strip() == second_team)
+        .filter(Odd.first_team == first_team, Odd.second_team == second_team)
         .order_by(Odd.id.desc())
         .first()
     )
+    # match = (
+    #     session.query(Odd)
+    #     .filter(find_substring(Odd.first_team, first_team), find_substring(Odd.second_team == second_team))
+    #     .order_by(Odd.id.desc())
+    #     .first()
+    # )
     logging.info(f'match: {match.match_id}')
     match_id = match.match_id
     

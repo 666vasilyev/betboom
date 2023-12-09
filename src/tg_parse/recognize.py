@@ -1,7 +1,7 @@
 import cv2
 import pytesseract
 import logging
-from utils import compare_strings
+from utils import find_substring
 
 from src.config import config
 
@@ -14,7 +14,7 @@ def resize_image(image):
 
 def extract_text_from_region(image, x_min: int, y_min: int, x_max: int, y_max: int) -> str:
     region = image[y_min:y_max, x_min:x_max]  # Выделение области интереса
-    custom_config = '--oem 3 --psm 6 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:.'
+    custom_config = '--oem 3 --psm 6 -c tessedit_char_whitelist=\bABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:.'
     text = pytesseract.image_to_string(region, config=custom_config, lang='eng')
     return text
 
@@ -43,13 +43,15 @@ def text_from_image(message_id: int):
         ratio = extract_nums_from_region(image, x_min=820, y_min=730, x_max=1000, y_max=840).replace('\n', '')
 
         logging.info(bet)
-
+        logging.info(f'predict: {predict}')
+        logging.info(f'one: {team_one}')
+        logging.info(f'one: {team_two}')
         ### ChatGPT написала функцию, которая сравнивает строки и устойчиво к опечаткам, надо тестить опять же
-        if compare_strings(team_one, predict):
-            logging.info(f'Compare is {compare_strings(team_one, predict)} for {team_one}')
+        if find_substring(predict, team_one):
+            logging.info(f'Compare is {find_substring(predict, team_one)} for {team_one}')
             winner = team_one
-        elif compare_strings(team_two, predict):
-            logging.info(f'Compare is {compare_strings(team_two, predict)} for {team_one}')
+        elif find_substring(predict, team_two):
+            logging.info(f'Compare is {find_substring(predict, team_two)} for {team_one}')
             winner = team_two
         else:
             winner = predict
