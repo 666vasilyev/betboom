@@ -41,6 +41,8 @@ def text_from_image(message_id: int):
         bet = extract_nums_from_region(image, x_min=50, y_min=850, x_max=310, y_max=1000).replace('\n', '')
         ratio = extract_nums_from_region(image, x_min=820, y_min=730, x_max=1000, y_max=840).replace('\n', '')
 
+        # TODO: нужно написать функцию, которая будет устойчива к ошибкам, и правильно определяла название команд.
+        ### Пример: Cloud9 превратился в Cloudg, а winner = VISAS.OO(что это вообще?)
         logging.info(bet)
         # вместо полного названия команды идет поиск по последним трем символам в названии, чтобы уменьшить число ошибок,
         # когда tesseract ошибается в одном символе в конце к примеру
