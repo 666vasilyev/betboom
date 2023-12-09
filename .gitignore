@@ -29,3 +29,4 @@ celerybeat-schedule.db
 *.session
 *.session-journal
 *.jpg
+.env

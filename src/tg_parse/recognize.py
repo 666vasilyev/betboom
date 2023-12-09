@@ -1,6 +1,7 @@
 import cv2
 import pytesseract
 import logging
+from utils import compare_strings
 
 from src.config import config
 
@@ -41,17 +42,19 @@ def text_from_image(message_id: int):
         bet = extract_nums_from_region(image, x_min=50, y_min=850, x_max=310, y_max=1000).replace('\n', '')
         ratio = extract_nums_from_region(image, x_min=820, y_min=730, x_max=1000, y_max=840).replace('\n', '')
 
-        # TODO: нужно написать функцию, которая будет устойчива к ошибкам, и правильно определяла название команд.
-        ### Пример: Cloud9 превратился в Cloudg, а winner = VISAS.OO(что это вообще?)
         logging.info(bet)
-        # вместо полного названия команды идет поиск по последним трем символам в названии, чтобы уменьшить число ошибок,
-        # когда tesseract ошибается в одном символе в конце к примеру
-        if predict.find(team_one[-3:]) != -1:
+
+        ### ChatGPT написала функцию, которая сравнивает строки и устойчиво к опечаткам, надо тестить опять же
+        if compare_strings(team_one, predict):
+            logging.info(f'Compare is {compare_strings(team_one, predict)} for {team_one}')
             winner = team_one
-        elif predict.find(team_two[-3:]) != -1:
+        elif compare_strings(team_two, predict):
+            logging.info(f'Compare is {compare_strings(team_two, predict)} for {team_one}')
             winner = team_two
         else:
             winner = predict
+
+        logging.info(f'Winner is {winner}')
 
         # бывает так, что Tesseract определяет последний символ в ставке как 8, вместо Р(рубль)
         if bet[-1:] != '0':
