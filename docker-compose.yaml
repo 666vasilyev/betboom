@@ -7,6 +7,8 @@ services:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     env_file:
       .env
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
