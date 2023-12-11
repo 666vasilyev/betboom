@@ -33,7 +33,7 @@ target_metadata = Base.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
-@retry(wait=wait_fixed(10))  # Повторять каждые 2 секунды
+@retry(wait=wait_fixed(15))  # Повторять каждые 15 секунд
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 

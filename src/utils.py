@@ -63,5 +63,3 @@ def find_substring(main_string, substring, threshold=3):
             return True
 
     return False
-
-print(find_substring('BetBoom Team', 'BetBoomTeam'))
