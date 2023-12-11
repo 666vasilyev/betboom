@@ -1,7 +1,10 @@
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
 
 class Config():
-
+    
+    load_dotenv()
     HEADERS = {
         'authority': 'api-bifrost.oddin.gg',
         'accept': '*/*',
@@ -22,8 +25,8 @@ class Config():
         'x-locale': 'RU',
         'x-sbi': 'd13c565b-ac5c-4142-8b3f-9d6fef2dcff3',
     }
-
-    SYNC_DB_URL: str = "postgresql+psycopg2://postgres:123@db:5432/betboom"
+    SYNC_DB_URL = os.getenv("DATABASE_URL")
+    # SYNC_DB_URL: str = "postgresql+psycopg2://postgres:123@db:5432/betboom"
     REDIS_HOST: str = "redis"
     REDIS_PORT: int = 6379
     LOG_LEVEL: str = "INFO"
@@ -51,5 +54,6 @@ class Config():
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
+
 
 config = Config()

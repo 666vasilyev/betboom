@@ -38,3 +38,5 @@ pydantic_core==2.10.1
 pytesseract==0.3.10
 rsa==4.9
 Telethon==1.30.3
+python-dotenv
+tenacity
