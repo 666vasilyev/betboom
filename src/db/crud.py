@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import desc, func
+from sqlalchemy import desc
 import logging
-from src.utils import find_substring
 
 from src.db.models import Odd, Prediction
 
@@ -29,7 +28,8 @@ def add_new_odds(
             if (last_odd.first_odd == new_odd.first_odd and
                 last_odd.second_odd == new_odd.second_odd and
                 last_odd.first_handicap == new_odd.first_handicap and
-                last_odd.second_handicap == new_odd.second_handicap
+                last_odd.second_handicap == new_odd.second_handicap and
+                last_odd.draw_odd == new_odd.draw_odd
                 ):
                 pass
             else:
@@ -59,24 +59,19 @@ def add_new_prediction(
     session.commit()
 
 
+
 def get_match_id_and_winner_count(session: Session, first_team: str, second_team: str, winner_team: str) -> (int, int, int):
     # Получаем match_id
     odd = 0
 
 
-    # TODO: надо сделать так, чтобы сравнение было с strip
+    # TODO: надо сделать так, чтобы сравнение было с compare_strings
     match = (
         session.query(Odd)
         .filter(Odd.first_team == first_team, Odd.second_team == second_team)
         .order_by(Odd.id.desc())
         .first()
     )
-    # match = (
-    #     session.query(Odd)
-    #     .filter(find_substring(Odd.first_team, first_team), find_substring(Odd.second_team == second_team))
-    #     .order_by(Odd.id.desc())
-    #     .first()
-    # )
     logging.info(f'match: {match.match_id}')
     match_id = match.match_id
     
@@ -92,4 +87,6 @@ def get_match_id_and_winner_count(session: Session, first_team: str, second_team
     
     logging.info(f'From DB: winner: {winner}, odd: {odd}, match_id: {match_id}')
     return match_id, winner, odd
+
+
 

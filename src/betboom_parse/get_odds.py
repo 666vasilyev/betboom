@@ -45,9 +45,19 @@ def parse_info_from_node(sport: Esport, node: dict):
         first_team = main_market_groups[0]['selections'][0]['name']
         second_team = main_market_groups[0]['selections'][1]['name']
 
+        # if second_team == 'ничья':
+        #     second_team = main_market_groups[0]['selections'][2]['name']
+
         # коэффициент на выигрыш
         first_odd = main_market_groups[0]['markets'][0]['outcomes'][0]['odds']
         second_odd = main_market_groups[0]['markets'][0]['outcomes'][1]['odds']
+
+        # иногда есть матчи, где можно ставить не только на первую и вторую команду, но и на ничью
+        if second_team == 'ничья':
+            second_team = main_market_groups[0]['selections'][2]['name']
+            draw_odd = main_market_groups[0]['markets'][0]['outcomes'][1]['odds']
+            second_odd = main_market_groups[0]['markets'][0]['outcomes'][2]['odds']
+
 
         # коэффициент на фору по картам
         try:
@@ -72,6 +82,7 @@ def parse_info_from_node(sport: Esport, node: dict):
                 second_team=second_team,
                 first_odd=first_odd,
                 second_odd=second_odd,
+                draw_odd=draw_odd,
                 first_handicap=first_handicap_db,
                 second_handicap=second_handicap_db,
                 sport_name=str(sport.name)

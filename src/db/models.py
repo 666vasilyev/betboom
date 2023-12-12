@@ -14,6 +14,7 @@ class Odd(Base):
     second_team: Mapped[str] = mapped_column(nullable=False)
     first_odd: Mapped[float] = mapped_column()
     second_odd: Mapped[float] = mapped_column()
+    draw_odd: Mapped[float] = mapped_column(server_default=None, nullable=True)
     first_handicap: Mapped[str] = mapped_column()
     second_handicap: Mapped[str] = mapped_column()
     sport_name: Mapped[str] = mapped_column(nullable=False)
