@@ -35,7 +35,7 @@ def get_nodes(sport: Esport):
 # работа с данными с сервера, которые представляют собой nodes = [], где каждая node - содержит информацию о коэффициентах
 def parse_info_from_node(sport: Esport, node: dict):
     main_market_groups = node['node']['mainMarketGroups']
-    draw_odd = 0
+    draw_odd = None
     # идентификатор команды
     raw_match_id = node['node']['id']
     match_id = int(hash_coder(raw_match_id).split(':')[2])
