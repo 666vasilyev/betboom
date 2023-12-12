@@ -36,6 +36,9 @@ def get_nodes(sport: Esport):
 def parse_info_from_node(sport: Esport, node: dict):
     main_market_groups = node['node']['mainMarketGroups']
     draw_odd = None
+    info = None
+    first_handicap_db = None
+    second_handicap_db = None
     # идентификатор команды
     raw_match_id = node['node']['id']
     match_id = int(hash_coder(raw_match_id).split(':')[2])
@@ -70,11 +73,7 @@ def parse_info_from_node(sport: Esport, node: dict):
             second_handicap_db = f'{-1*info}:{second_handicap}'
 
         except Exception as e:
-            # logging.error(f'Handicaps not found for {match_id}')
-
-            info = 0
-            first_handicap_db = ''
-            second_handicap_db = ''
+            logging.error(f'Handicaps not found for {match_id}')
 
         return Odd(
                 match_id=match_id,
