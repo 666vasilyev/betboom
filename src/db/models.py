@@ -43,7 +43,7 @@ class Prediction(Base):
 class TennisOdd(Base):
     __tablename__ = "TennisOdds"
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    match_id: Mapped[int] = mapped_column
+    match_id: Mapped[int] = mapped_column()
     time: Mapped[datetime.datetime] = mapped_column(default=datetime.datetime.utcnow)
 
     first_player: Mapped[str] = mapped_column()
