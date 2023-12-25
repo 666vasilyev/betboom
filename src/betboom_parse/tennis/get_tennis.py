@@ -28,7 +28,7 @@ def parse_info_from_tennis_node(node: dict):
 
     # logging.info('--------------------------------')
 
-    match_id=node['Id'],
+    match_id=node['Id']
     time=node['D']
 
     first_player=node['HT']
@@ -44,7 +44,7 @@ def parse_info_from_tennis_node(node: dict):
         total_b = f"{node['StakeTypes'][2]['Stakes'][0]['A']}:{node['StakeTypes'][2]['Stakes'][0]['F']}"
         total_m = f"{node['StakeTypes'][2]['Stakes'][1]['A']}:{node['StakeTypes'][2]['Stakes'][1]['F']}"
     except Exception as e:
-        logging.error(f'Failed to find totals for {node['Id']}')
+        logging.error(f"Failed to find totals for {node['Id']}")
 
     return TennisOdd(
         match_id=match_id,
