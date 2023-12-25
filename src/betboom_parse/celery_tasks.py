@@ -5,6 +5,7 @@ import asyncio
 from celery import Celery
 
 from src.betboom_parse.get_odds import parse_odds
+from src.betboom_parse.tennis.get_tennis import parse_tennis
 from src.config import config
 
 logging.basicConfig(level=logging.INFO)
@@ -26,4 +27,11 @@ def sync_parse_odds():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(
         parse_odds()
+    )
+
+@celery.task
+def sync_parse_tennis_odds():
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(
+        parse_tennis()
     )

@@ -33,7 +33,11 @@ class Config():
         "sync-parse-odds": {
             "task": "src.betboom_parse.celery_tasks.sync_parse_odds",
             "schedule": timedelta(seconds=15),
-        }
+        },
+        "sync-parse-tennis-odds": {
+            "task": "src.betboom_parse.celery_tasks.sync_parse_tennis_odds",
+            "schedule": timedelta(seconds=15),
+        },
     }
     def broker(self):
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/0"
