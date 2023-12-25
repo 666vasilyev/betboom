@@ -15,8 +15,6 @@ def get_tennis_nodes() -> dict:
         params=params,
         headers=headers,
     )
-
-
     try:
             data = json.loads(response.text)
     except json.decoder.JSONDecodeError as e:
@@ -28,7 +26,7 @@ def get_tennis_nodes() -> dict:
 # работа с данными с сервера, которые представляют собой nodes = [], где каждая node - содержит информацию о коэффициентах
 def parse_info_from_tennis_node(node: dict): 
 
-    logging.info('--------------------------------')
+    # logging.info('--------------------------------')
 
     match_id=node['Id'],
     time=node['D']
@@ -39,12 +37,12 @@ def parse_info_from_tennis_node(node: dict):
     p1=node['StakeTypes'][0]['Stakes'][0]['F']
     p2=node['StakeTypes'][0]['Stakes'][1]['F']
 
-    fora_f1=f'{node['StakeTypes'][1]['Stakes'][0]['A']}:{node['StakeTypes'][1]['Stakes'][0]['F']}'
-    fora_f2=f'{node['StakeTypes'][1]['Stakes'][1]['A']}:{node['StakeTypes'][1]['Stakes'][1]['F']}'
+    fora_f1=f"{node['StakeTypes'][1]['Stakes'][0]['A']}:{node['StakeTypes'][1]['Stakes'][0]['F']}"
+    fora_f2=f"{node['StakeTypes'][1]['Stakes'][1]['A']}:{node['StakeTypes'][1]['Stakes'][1]['F']}"
 
     try:
-        total_b = f'{node['StakeTypes'][2]['Stakes'][0]['A']}:{node['StakeTypes'][2]['Stakes'][0]['F']}'
-        total_m = f'{node['StakeTypes'][2]['Stakes'][1]['A']}:{node['StakeTypes'][2]['Stakes'][1]['F']}'
+        total_b = f"{node['StakeTypes'][2]['Stakes'][0]['A']}:{node['StakeTypes'][2]['Stakes'][0]['F']}"
+        total_m = f"{node['StakeTypes'][2]['Stakes'][1]['A']}:{node['StakeTypes'][2]['Stakes'][1]['F']}"
     except Exception as e:
         logging.error(f'Failed to find totals for {node['Id']}')
 
