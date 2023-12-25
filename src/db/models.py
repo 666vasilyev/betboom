@@ -56,6 +56,6 @@ class TennisOdd(Base):
     fora_f2: Mapped[str] = mapped_column()
 
     
-    total_b: Mapped[str] = mapped_column()
-    total_m: Mapped[str] = mapped_column()
+    total_b: Mapped[str] = mapped_column(nullable=True)
+    total_m: Mapped[str] = mapped_column(nullable=True)
 

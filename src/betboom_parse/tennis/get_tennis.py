@@ -28,6 +28,8 @@ def parse_info_from_tennis_node(node: dict):
 
     # logging.info('--------------------------------')
 
+    total_b = None
+    total_m = None
     match_id=node['Id']
     time=node['D']
 
