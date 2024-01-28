@@ -25,8 +25,6 @@ services:
       - db
     command: alembic upgrade head
 
-
-
   redis:
     image: redis:7
     container_name: "redis"
@@ -49,15 +47,3 @@ services:
     env_file:
       .env
 
-
-
-
-  tg_parse:
-    container_name: "tg_parse"
-    image: "tg_parse"
-    build: 
-      context: ./
-      dockerfile: Dockerfile
-    command: python3 src/tg_parse/bot.py
-    volumes:
-    - ./src/tg_parse/sessions:/src/tg_parse/sessions:rw
