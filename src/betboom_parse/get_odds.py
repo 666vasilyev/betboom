@@ -35,7 +35,10 @@ def get_nodes(sport: Esport):
 # работа с данными с сервера, которые представляют собой nodes = [], где каждая node - содержит информацию о коэффициентах
 def parse_info_from_node(sport: Esport, node: dict):
     main_market_groups = node['node']['mainMarketGroups']
-
+    draw_odd = None
+    info = None
+    first_handicap_db = None
+    second_handicap_db = None
     # идентификатор команды
     raw_match_id = node['node']['id']
     match_id = int(hash_coder(raw_match_id).split(':')[2])
@@ -45,9 +48,19 @@ def parse_info_from_node(sport: Esport, node: dict):
         first_team = main_market_groups[0]['selections'][0]['name']
         second_team = main_market_groups[0]['selections'][1]['name']
 
+        # if second_team == 'ничья':
+        #     second_team = main_market_groups[0]['selections'][2]['name']
+
         # коэффициент на выигрыш
         first_odd = main_market_groups[0]['markets'][0]['outcomes'][0]['odds']
         second_odd = main_market_groups[0]['markets'][0]['outcomes'][1]['odds']
+
+        # иногда есть матчи, где можно ставить не только на первую и вторую команду, но и на ничью
+        if second_team == 'ничья':
+            second_team = main_market_groups[0]['selections'][2]['name']
+            draw_odd = main_market_groups[0]['markets'][0]['outcomes'][1]['odds']
+            second_odd = main_market_groups[0]['markets'][0]['outcomes'][2]['odds']
+
 
         # коэффициент на фору по картам
         try:
@@ -60,11 +73,7 @@ def parse_info_from_node(sport: Esport, node: dict):
             second_handicap_db = f'{-1*info}:{second_handicap}'
 
         except Exception as e:
-            # logging.error(f'Handicaps not found for {match_id}')
-
-            info = 0
-            first_handicap_db = ''
-            second_handicap_db = ''
+            logging.error(f'Handicaps not found for {match_id}')
 
         return Odd(
                 match_id=match_id,
@@ -72,6 +81,7 @@ def parse_info_from_node(sport: Esport, node: dict):
                 second_team=second_team,
                 first_odd=first_odd,
                 second_odd=second_odd,
+                draw_odd=draw_odd,
                 first_handicap=first_handicap_db,
                 second_handicap=second_handicap_db,
                 sport_name=str(sport.name)
