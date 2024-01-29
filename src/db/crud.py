@@ -121,4 +121,5 @@ def get_match_id_and_winner_count(session: Session, first_team: str, second_team
     return match_id, winner, odd
 
 
-
+def get_match_stats_by_id(session: Session, match_id: int):
+    return session.query(Odd).filter(Odd.match_id == match_id).all()
