@@ -22,7 +22,6 @@ def get_nodes(sport: Esport):
         headers=config.HEADERS, 
         json=get_json_for_all_matches(sport.value)
         )
-
     try:
         data = json.loads(response.text)
     except json.decoder.JSONDecodeError as e:
@@ -99,13 +98,13 @@ async def parse_odds():
         try:
             nodes = get_nodes(sport=sport)
         except Exception as e:
-            logging.error(f'Exception: {e}')
+            logging.error(f'Exception in get_nodes: {e}')
 
         for node in nodes:
             try:
                 odd = parse_info_from_node(sport, node)
             except Exception as e:
-                logging.error(f'Exception: {e}')
+                logging.error(f'Exception in parse_info_from_node: {e}')
 
             if odd is not None:
                 data_to_add.append(odd)
@@ -116,4 +115,3 @@ async def parse_odds():
             add_new_odds(session, data_to_add)
         data_to_add = []
 
-        

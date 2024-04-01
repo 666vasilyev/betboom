@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc
 import logging
 
-from src.db.models import Odd, Prediction, TennisOdd
+from src.db.models import Odd, TennisOdd
 
 logging.basicConfig(level=logging.INFO)
 
@@ -70,25 +70,25 @@ def add_new_tennis_odds(
     session.commit()
 
 
-def add_new_prediction(
-        session: Session,
-        first_team: str,
-        second_team: str,
-        winner: str,
-        bet: str,
-        ratio: str
-        ):
+# def add_new_prediction(
+#         session: Session,
+#         first_team: str,
+#         second_team: str,
+#         winner: str,
+#         bet: str,
+#         ratio: str
+#         ):
     
-    new_prediction = Prediction(
-        first_team=first_team,
-        second_team=second_team,
-        winner=winner,
-        bet=bet,
-        ratio=ratio
-        )
+#     new_prediction = Prediction(
+#         first_team=first_team,
+#         second_team=second_team,
+#         winner=winner,
+#         bet=bet,
+#         ratio=ratio
+#         )
     
-    session.add(new_prediction)
-    session.commit()
+#     session.add(new_prediction)
+#     session.commit()
 
 
 
@@ -121,5 +121,6 @@ def get_match_id_and_winner_count(session: Session, first_team: str, second_team
     return match_id, winner, odd
 
 
-def get_match_stats_by_id(session: Session, match_id: int):
+def get_match_statistics_by_match_id(session: Session, match_id: int):
     return session.query(Odd).filter(Odd.match_id == match_id).all()
+

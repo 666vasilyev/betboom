@@ -16,7 +16,7 @@ def get_json_for_all_matches(sport_id: int):
     'extensions': {
         'persistedQuery': {
             'version': 1,
-            'sha256Hash': 'fe60acf530a627da8bd6f6578b1119a3e1e7cbc6abbb2a72497591a68cdfec20',
+            'sha256Hash': 'a0aa26ffe006bc1c6ab169f0b6d5b2780c094ea92ac78bb58728b97b54001280',
         },
     },
 }

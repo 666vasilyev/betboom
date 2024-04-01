@@ -26,20 +26,6 @@ class Odd(Base):
     sport_name: Mapped[str] = mapped_column(nullable=False)
 
 
-class Prediction(Base):
-    __tablename__ = "Predictions"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    time: Mapped[datetime.datetime] = mapped_column(default=datetime.datetime.utcnow)
-
-    first_team: Mapped[str] = mapped_column()
-    second_team: Mapped[str] = mapped_column()
-
-    winner: Mapped[str] = mapped_column()
-
-    bet: Mapped[str] = mapped_column()
-    ratio: Mapped[str] = mapped_column()
-
-
 class TennisOdd(Base):
     __tablename__ = "TennisOdds"
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

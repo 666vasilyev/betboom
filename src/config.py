@@ -23,7 +23,7 @@ class Config():
         'x-api-key': 'b94ac61d-b060-4892-8242-923bf2303a38',
         'x-display-resolution': '674x546',
         'x-locale': 'RU',
-        'x-sbi': 'd13c565b-ac5c-4142-8b3f-9d6fef2dcff3',
+        'x-sbi': 'b46529e1-98f7-4256-930e-445c702d42eb',
     }
     SYNC_DB_URL = os.getenv("DATABASE_URL")
     REDIS_HOST: str = os.getenv("REDIS_HOST")
@@ -50,7 +50,7 @@ class Config():
     API_HASH: str = os.getenv("API_HASH")
     PHONE_NUMBER: str = os.getenv("PHONE_NUMBER")
     
-    CHANNEL_USERNAME: str = "travobet"
+    # CHANNEL_USERNAME: str = "travobet"
     # CHANNEL_USERNAME: str = "test_channel_for_botsapi3"
     MEDIA_DIR: str = "media"
 

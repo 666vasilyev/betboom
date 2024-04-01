@@ -1,42 +1,36 @@
-import asyncio
-from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy.ext.asyncio import create_async_engine
-from fastapi import Depends, FastAPI, HTTPException
-
-from src.api.redis_local import write_match_data_to_redis
-from src.db.crud import get_match_stats_by_id
+from fastapi import FastAPI, HTTPException
+from sqlalchemy.orm import Session
+from fastapi import Depends
 from src.db.connection import Connection
+from src.db.crud import get_match_statistics_by_match_id
 
 app = FastAPI()
 
-
+# TODO: сделать модели pydantic
+# GET запрос для получения записей с заданным match_id из таблицы Odd
 @app.get("/stats/{match_id}")
-async def get_stats(match_id: int):
-    async with Connection.getConnection() as session:
-            odds = get_match_stats_by_id(session, match_id)
-    if not odds:
-        raise HTTPException(status_code=404, detail="Stats not found")
-    return odds
-
-@app.post("/set_limits/")
-async def set_limits(
-    match_id: int,
-    first_odd: tuple(float, float),
-    second_odd: tuple(float, float),
-    draw_odd: tuple(float, float),
-    first_handicap: tuple(float, float),
-    second_handicap: tuple(float, float),
+async def get_stats(
+     match_id: int
 ):
-    match_data = {
-        "first_odd": {"minn": first_odd[0], "maxx": first_odd[1]},
-        "second_odd": {"minn": second_odd[0], "maxx": second_odd[1]},
-        "draw_odd": {"minn": draw_odd[0], "maxx": draw_odd[1]},
-        "first_handicap": {"minn": first_handicap[0], "maxx": first_handicap[1]},
-        "second_handicap": {"minn": second_handicap[0], "maxx": second_handicap[1]}
-    }
-    status = write_match_data_to_redis(
-         match_id=match_id,
-         match_data=match_data,
-         expiry_seconds=10
-    )
-    return status
+    async with Connection.getConnection() as session:
+            stats = get_match_statistics_by_match_id(
+                session=session, 
+                match_id=match_id
+                )
+    if not stats:
+        raise HTTPException(status_code=404, detail="Stats not found")
+    return stats
+
+
+# POST запрос для создания новых записей в таблице Odd
+@app.post("/odd_limits/")
+async def post_odd_limits(
+    match_id: int,
+    first_odd: float, 
+    second_odd: float, 
+    draw_odd: float,
+    first_handicap: str, 
+    second_handicap: str
+):
+
+    return new_odd
